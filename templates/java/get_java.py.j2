@@ -37,38 +37,13 @@ def discover_latest_java(java_version=8, package='server-jre', extension='tar.gz
             print('\t' + valid_package)
         return None
 
-    url = "https://www.oracle.com"
+    if extension == "deb":
+      download_url = "{{ debian_download_url }}"
+    elif extension == "rpm":
+      download_url = "{{ rpm_download_url }}"
+    elif extension == ".tar.gz":
+      download_url = "{{ source_download_url }}"
 
-    url_1 = url + "/technetwork/java/javase/downloads/index.html"
-    pattern_1 = '\/technetwork\/java/\javase\/downloads\/' + package + str(java_version) + '-downloads-.+?\.html'
-    match = regex_websearch(url_1, pattern_1)
-
-    search_pattern = "https\:\/\/download.oracle\.com\/otn(-pub)?\/java\/jdk\/[" + java_version + "]u[0-9]+?-.+?\/(" + package + "-[" + java_version + "]u[0-9]+?-" + architecture + "." + extension + ")"
-
-    if match is None:
-        download_locations = java_download_locations
-    else:
-        download_locations = [match.group(0)]
-
-
-    match = None
-
-    for location in download_locations:
-      url_2 = url + location
-      pattern_2 = search_pattern
-      match = regex_websearch(url_2, pattern_2)
-      if match is not None:
-          break;
-
-    if match is None:
-        print('Selected architecture.extension \"' + architecture + '.' + extension + '\" is not available')
-        print('Visit \"' + url_2 + '\" to see available architectures and extensions')
-        return None
-
-    if int(java_version) >= 8:
-      download_url = match.group(0)
-    else:
-      download_url = alternate_java_6_7_download_mirror + match.group(2)
     return download_url
 
 if __name__ == '__main__':
