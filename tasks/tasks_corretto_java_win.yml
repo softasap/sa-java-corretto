@@ -6,7 +6,7 @@
       dest: C:\amazon-corretto.msi
 
   - name: Java | Install package
-    win_msi:
+    win_package:
       path: C:\amazon-corretto.msi
       wait: yes
 

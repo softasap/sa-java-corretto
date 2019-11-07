@@ -65,7 +65,7 @@
 
     - name: dependencies
       apt: pkg="java-common" state="present"
-      become: "{{ 'no' if role_no_become is defined else 'yes' }}"      
+      become: "{{ 'no' if role_no_become is defined else 'yes' }}"
 
     - name: execute java discovery script
       command: /tmp/get_java.py --version {{ java_version }} --extension deb
@@ -101,6 +101,9 @@
               - set_fact:
                   java_download_file: "{{ java_download_url.stdout.rsplit('/', 1)[-1] }}"
                   detected_download_url: "{{ java_download_url.stdout }}"
+
+              - debug: var="detected_download_url"
+              - debug: var="java_download_file"
 
         when: custom_java_download_url is not defined
 
@@ -237,6 +240,7 @@
     with_items:
       - get_java.py
       - java.rpm
+      - java.deb
       - java.tar.gz
     tags:
       -java
