@@ -1,6 +1,6 @@
 ---
 # defaults file for sa-java
-  java_version: 8
+  java_version: "1.8.0" # or 11
 
   role_dir: "{{role_path}}"
 
