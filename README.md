@@ -9,7 +9,7 @@ Installs amazon flavoured java corretto  controlled by java_version variable
 
 ```
 # validate checksum against known to role one
-option_validate_checksum: false  
+option_validate_checksum: false
 
 # preferred mirror, if java download is not available
 alternative_java_6_7_mirror: "ftp://ftp.slackware.com/.1/funtoo/distfiles/oracle-java/"

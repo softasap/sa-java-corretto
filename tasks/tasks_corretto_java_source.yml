@@ -151,6 +151,7 @@
         unarchive:
           src: /tmp/java.zip
           dest: /tmp
+          mode: u+rw,g-wx,o-rwx
 #        command: "tar -xzf /tmp/java.tar.gz -C /tmp"
         become: "{{ 'no' if role_no_become is defined else 'yes' }}"
         tags:
@@ -170,13 +171,16 @@
           jdk_folder: "{{ jdk_folder_raw.stdout }}"
 
       - name: Java | Fix ownership
-        file: state=directory path=/tmp/{{ jdk_folder }} owner=root group=root recurse=yes
+        file: state=directory path=/tmp/{{ jdk_folder }} owner=root group=root mode="u+rw" recurse=yes
         become: "{{ 'no' if role_no_become is defined else 'yes' }}"
         tags:
             -java
 
       - name: Java | Create Java folder
-        file: "state=directory path={{ java_folder }}"
+        file:
+          state: directory
+          path: "{{ java_folder }}"
+          mode: "u+rw"
         become: "{{ 'no' if role_no_become is defined else 'yes' }}"
         tags:
             -java

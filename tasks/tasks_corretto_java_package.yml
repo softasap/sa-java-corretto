@@ -1,3 +1,4 @@
+---
   - block:
 
     - name: Java Corretto | Add GPG key to apt keyring
@@ -67,4 +68,3 @@
         - java
 
     when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-
